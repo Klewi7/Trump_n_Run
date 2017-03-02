@@ -10,6 +10,7 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -22,7 +23,7 @@ public class SimpleAnimation implements KeyListener
 
   private Canvas canvas;
   private BufferedImage trumpImage;
-  private int trumpX,trumpWidth,trumpY=300;
+  private int trumpX,trumpWidth,trumpY=350;
   private boolean gameOver=false;
   
   public static void main(String[] args) throws IOException
@@ -42,7 +43,9 @@ public class SimpleAnimation implements KeyListener
     frame.setTitle("Trump'n'Run");
     frame.pack();
     frame.setVisible(true);
-    
+    LocalDateTime now=LocalDateTime.now();
+    int currentHour=now.getHour();
+    // TODO: Change background image depending on hour.1
     gameLoop();
   }
   public void gameLoop()
