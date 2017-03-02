@@ -22,7 +22,7 @@ public class SimpleAnimation implements KeyListener
 
   private Canvas canvas;
   private BufferedImage trumpImage;
-  private int trumpX,trumpWidth,trumpY=300;
+  private int trumpX,trumpWidth,trumpY=550;
   private boolean gameOver=false;
   
   public static void main(String[] args) throws IOException
