@@ -21,8 +21,10 @@ public class SimpleAnimation implements KeyListener {
     private Canvas canvas;
     private BufferedImage trumpImage;
     private int trumpX, trumpWidth, trumpY = 350; // TODO: Move to separate lines.
-    private boolean gameOver = false;
-
+    private boolean gameOver;
+    private boolean trumpIsJumping;
+    private int remainingTrumpJumpTicks;
+    
     public static void main(String[] args) throws IOException {
         SimpleAnimation ani = new SimpleAnimation();
         ani.go();
@@ -45,6 +47,13 @@ public class SimpleAnimation implements KeyListener {
 
     public void gameLoop() {
         while (!gameOver) {
+            if(trumpIsJumping){
+                remainingTrumpJumpTicks--;
+                if(remainingTrumpJumpTicks==0){
+                    trumpIsJumping=false;
+                }
+                
+            }
             canvas.repaint();
             try {
                 Thread.sleep(TICK_IN_MILLISECOND);
@@ -76,7 +85,11 @@ public class SimpleAnimation implements KeyListener {
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-
+            if(!trumpIsJumping){
+                trumpIsJumping=true;
+                remainingTrumpJumpTicks=60;
+                
+            }
         }
     }
 
@@ -103,7 +116,9 @@ public class SimpleAnimation implements KeyListener {
         protected void paintComponent(Graphics g) {
             Graphics2D g2d = (Graphics2D) g;
             g2d.fillRect(0, 0, WIDTH, HEIGHT);
-            g2d.drawImage(trumpImage, trumpX, trumpY, null);
+            double rootPart = 1.0 - Math.pow((60.0 - remainingTrumpJumpTicks) / 60.0, 2);
+            int trumpDeltaY  = (int) (300.0 * Math.sqrt(rootPart));
+            g2d.drawImage(trumpImage, trumpX, trumpY - trumpDeltaY, null);
         }
     }
 
